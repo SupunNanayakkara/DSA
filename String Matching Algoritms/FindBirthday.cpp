@@ -10,6 +10,54 @@ fstream data_file; //for Pi.txt file
 fstream write_file; //for results.txt file
 vector<char> text_vector; //create vector
 
+//append results to the results.txt file
+void FileWrite(int data,int n)
+{
+	write_file.open("results.txt",ios::app);   
+	if(!write_file) 
+		cout<<"Problem while updating the data file"<<endl; 
+	else
+	{
+		if(n==1)
+		{
+			write_file<<"BirthDay Found At: "<<data<<endl;
+		}
+		else
+		{
+			write_file<<"No. of Results: "<<data<<endl<<endl;;
+		}
+		write_file.close();
+	}
+}
+
+//naive string search algorithm
+void Naive(char bday[], const vector<char> &text_vector)
+{
+	cout<<"Naive String Matching Algorithm"<<endl;
+	
+	int i,j,count=0;
+    for(i=0;i<text_vector.size();i++) //read text string  
+	{
+        for(j=0;j<6;j++) //read birthday pattern 
+		{
+            if(text_vector.at(i+j)!=bday[j]) //if missmatch after j matches
+			{
+                break;
+            }
+        }
+
+        if(j==6) //if all the characters matches
+		{
+            cout<<"BirthDay Found At : "<< i+1 <<endl;
+            FileWrite(i+1,1);
+            count++; //count no. of matches
+        }
+    }
+    cout<<"No. of Results:"<<count<<endl<<endl;
+    FileWrite(count,0);
+}
+
+
 int main()
 {
 	int op,a,i,flag=0,x=0;
@@ -89,6 +137,26 @@ int main()
 		}
 		cout<<"Select Your Searching Algorithm: ";
 		cin>>op;
+		
+		switch(op)
+		{
+			case 1:
+				write_file.open("results.txt",ios::app);   
+				if(!write_file) 
+					cout<<"Problem while updating the data file"<<endl;
+				else
+				{
+					write_file<<"Naive String Matching Algorithm"<<endl;
+					write_file.close();
+				}
+				Naive(bday,text_vector);								
+				break;
+			case 5:
+				exit(0);
+			default:
+				cout<<"Invalid Option";
+				break;
+		}
 		
 	}
 	return 0;
