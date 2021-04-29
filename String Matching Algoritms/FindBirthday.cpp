@@ -219,6 +219,17 @@ int main()
 				}
 				Naive(bday,text_vector);								
 				break;
+			case 2:
+				write_file.open("results.txt",ios::app);   
+				if(!write_file) 
+					cout<<"Problem while updating the data file"<<endl;
+				else
+				{
+					write_file<<"KMP String Matching Algorithm"<<endl;
+					write_file.close();
+				}
+				KMP(bday,text_vector);
+				break;
 			case 5:
 				exit(0);
 			default:
