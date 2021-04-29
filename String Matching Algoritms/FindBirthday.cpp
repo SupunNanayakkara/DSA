@@ -57,6 +57,74 @@ void Naive(char bday[], const vector<char> &text_vector)
     FileWrite(count,0);
 }
 
+//calculate longest proper suffix
+void LPSfunc(char* bday, int* lps) 
+{
+	int len=0, i=1; 
+	lps[0] = 0; 	//initiate 
+ 
+	while (i<6) 
+	{ 
+		if (bday[i]==bday[len]) 
+		{ 
+			len++; 
+			lps[i] = len; 
+			i++; 
+		} 
+		else 
+		{ 
+			if (len!=0) 
+			{ 
+				len=lps[len-1];
+			} 
+			else
+			{ 
+				lps[i] = 0; 
+				i++; 
+			} 
+		} 
+	}
+}
+//KMP string matching algorithm
+void KMP(char bday[], const vector<char> &text_vector)
+{
+	cout<<"KMP String Matching Algorithm"<<endl;
+	 
+	int lps[6],count=0; 
+	LPSfunc(bday,lps); //calculate lps 
+
+	int i = 0; // index for textt[] 
+	int j = 0; // index for bday[] 
+	while (i<text_vector.size()) 
+	{ 
+		if(bday[j]==text_vector.at(i)) 
+		{ 
+			j++; 
+			i++; 
+		} 
+
+		if(j==6) //if all the characters matches
+		{ 
+			cout<<"BirthDay Found At : "<< i-j+1 <<endl;
+			FileWrite(i-j+1,1);
+            count++;
+			j=lps[j-1]; 
+		}
+		else if(i<text_vector.size() && bday[j]!=text_vector.at(i)) // if mismatch after j matches 
+		{ 
+			if(j!= 0)
+			{ 
+				j=lps[j-1];
+			}
+			else
+			{
+				i=i+1;
+			}
+		} 
+	}
+	cout<<"No. of Results:"<<count<<endl<<endl;
+	FileWrite(count,0); 
+}
 
 int main()
 {
