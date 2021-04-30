@@ -192,6 +192,12 @@ void BadCharacterFunc(char bday[], int bchar[])
 	}
 }
 
+//check maximum value and return it
+int max(int a, int b)
+{
+    return (a > b) ? a : b;
+}
+
 int main()
 {
 	int op,a,i,flag=0,x=0;
