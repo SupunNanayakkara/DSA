@@ -198,6 +198,44 @@ int max(int a, int b)
     return (a > b) ? a : b;
 }
 
+//Boyer-Moore string matching algorithm
+void BM(char bday[], const vector<char> &text_vector) 
+{
+	int bchar[256],j,shift=0,count=0; 
+
+	BadCharacterFunc(bday,bchar); //calculate bad character table 
+
+	while(shift <= text_vector.size()-6)	//read whole text 
+	{ 
+		j = 5; 
+		while(j >= 0 && bday[j] == text_vector[shift+j]) //matching char by char from right to left
+		{
+			j--;
+		}
+		
+		if (j < 0)		//if all the characters matches 
+		{ 
+			cout<<"BirthDay Found At : "<< shift+1 << endl;
+			FileWrite(shift+1,1);
+			count++; 
+			if(shift + 6 < text_vector.size())	//continue string matching
+			{
+				shift = shift + 6 - bchar[text_vector.at(shift + 6)];
+			}
+			else
+			{
+				shift = shift + 1;
+			} 
+		}
+		else
+		{
+			shift = shift + max(1, j - bchar[text_vector.at(shift + j)]);	
+		} 
+	}
+	cout<<"No. of Results:"<<count<<endl<<endl;
+	FileWrite(count,0); 
+}
+
 int main()
 {
 	int op,a,i,flag=0,x=0;
