@@ -126,6 +126,54 @@ void KMP(char bday[], const vector<char> &text_vector)
 	FileWrite(count,0); 
 }
 
+//Rabin-Karp string matching algorithm
+void RK(char bday[], const vector<char> &text_vector, int p) 
+{ 
+	int i, j, h=1, d=10,count=0; 
+	int hash_bday = 0; // hash value for birthday pattern 
+	int hash_text = 0; // hash value for text 
+
+	for (i=0;i<5;i++)	// h=pow(d, m-1)%p or h=(d^m-1)%p
+	{ 
+		h=(h*d)%p;
+	}
+	
+	for (i=0;i<6;i++) 
+	{ 
+		hash_bday = (d * hash_bday + bday[i]) % p;				//hash value for birthday pattern 
+		hash_text = (d * hash_text + text_vector.at(i)) % p;	//hash value for starting sub-string of text
+	} 
+	for (i=0;i<=text_vector.size()-6;i++) 
+	{ 
+		if (hash_bday == hash_text) 
+		{ 
+			for (j=0;j<6;j++) 
+			{ 
+				if (text_vector.at(i+j)!=bday[j]) 
+				{
+	                break;
+	            }
+			}
+			if (j == 6)		//if all the characters matches
+			{ 
+				cout<<"BirthDay Found At : "<< i+1 <<endl;
+				FileWrite(i+1,1);
+				count++;
+			}
+		} 
+		if (i<text_vector.size()-6) 
+		{ 
+			hash_text = (d*(hash_text - text_vector.at(i)*h) + text_vector.at(i+6))%p; 
+			if (hash_text<0)
+			{
+				hash_text= (hash_text + p);
+			}
+		} 
+	}
+	cout<<"No. of Results:"<<count<<endl<<endl; 
+	FileWrite(count,0);
+}
+
 int main()
 {
 	int op,a,i,flag=0,x=0;
