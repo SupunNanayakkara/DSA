@@ -351,6 +351,17 @@ int main()
 				}
 				RK(bday,text_vector,11);
 				break;
+			case 4:
+				write_file.open("results.txt",ios::app);   
+				if(!write_file) 
+					cout<<"Problem while updating the data file"<<endl;
+				else
+				{
+					write_file<<"Boyer-Moore String Matching Algorithm"<<endl;
+					write_file.close();
+				}
+				BM(bday,text_vector);
+				break;
 			case 5:
 				exit(0);
 			default:
