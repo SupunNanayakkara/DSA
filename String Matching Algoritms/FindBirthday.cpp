@@ -174,6 +174,24 @@ void RK(char bday[], const vector<char> &text_vector, int p)
 	FileWrite(count,0);
 }
 
+//calculate bad character table
+void BadCharacterFunc(char bday[], int bchar[]) 
+{ 
+	int i; 
+
+	// Initialize all occurrences as -1 
+	for (i=0;i<256;i++)
+	{ 
+		bchar[i] = -1;
+	}
+
+	// Fill the actual value of last occurrence (index) of a character 
+	for (i=0;i<6;i++)
+	{ 
+		bchar[(int) bday[i]] = i;	//according to the ascii value
+	}
+}
+
 int main()
 {
 	int op,a,i,flag=0,x=0;
