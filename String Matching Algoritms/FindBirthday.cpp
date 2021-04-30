@@ -278,6 +278,17 @@ int main()
 				}
 				KMP(bday,text_vector);
 				break;
+			case 3:
+				write_file.open("results.txt",ios::app);   
+				if(!write_file) 
+					cout<<"Problem while updating the data file"<<endl;
+				else
+				{
+					write_file<<"Rabin-Karp String Matching Algorithm"<<endl;
+					write_file.close();
+				}
+				RK(bday,text_vector,11);
+				break;
 			case 5:
 				exit(0);
 			default:
